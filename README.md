@@ -1,7 +1,14 @@
 # wotclientdetection
 
-Programatically detect and delegate WoT/MT launchers and clients.
-Based on original code from [OpenWG.Utils](https://gitlab.com/openwg/openwg.utils) and rewritten in Python.
+Programatically detect and delegate WoT/MT launchers and clients.  
+Based on original code from [OpenWG.Utils](https://gitlab.com/openwg/openwg.utils) and rewritten in Python.  
+Currently supports only Windows.
+
+## Installation
+
+```
+pip install wotclientdetection
+```
 
 ## Examples
 
