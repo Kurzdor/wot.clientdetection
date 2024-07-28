@@ -51,7 +51,7 @@ class LauncherManager:
             launcher = Launcher(metadata, real_path)
             self.__launchers.append(launcher)
 
-    def get_launcher(self, flavour) -> LauncherBase | Launcher | LauncherStandalone:
+    def get_launcher(self, flavour) -> Launcher | LauncherStandalone:
         if not self.__inititalized:
             return None
         for launcher in self.__launchers:
@@ -59,7 +59,7 @@ class LauncherManager:
                 return launcher
         return None
 
-    def get_launchers(self) -> list[LauncherBase | Launcher | LauncherStandalone]:
+    def get_launchers(self) -> list[Launcher | LauncherStandalone]:
         if not self.__inititalized:
             return None
         return self.__launchers
