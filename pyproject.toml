@@ -7,7 +7,7 @@ name = "wotclientdetection"
 description = "Programatically detect and delegate WoT/MT launchers and clients"
 readme = "README.md"
 requires-python = ">=3"
-license = {file = "LICENSE.txt"}
+license = {file = "LICENSE.md"}
 keywords = ["wot", "mt", "launcher", "client", "detection"]
 authors = [
   {name = "OpenWG.Utils Contributors" },
