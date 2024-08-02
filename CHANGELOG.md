@@ -1,5 +1,9 @@
 # Changelog
 
+### 2024.08.02
+
+- Added `get_launcher_by_realm` method to `LauncherManager`
+
 ### 2024.07.28.1
 
 - Updated license
