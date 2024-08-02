@@ -43,3 +43,13 @@ class ClientRealm:
     CN = 'CN'
     RU = 'RU'
     RPT = 'RPT'
+
+CLIENT_REALM_TO_LAUNCHER_FLAVOUR = {
+    ClientRealm.EU: LauncherFlavour.WG,
+    ClientRealm.NA: LauncherFlavour.WG,
+    ClientRealm.ASIA: LauncherFlavour.WG,
+    ClientRealm.CT: LauncherFlavour.WG,
+    ClientRealm.CN: LauncherFlavour.CHINA_360,
+    ClientRealm.RU: LauncherFlavour.LESTA,
+    ClientRealm.RPT: LauncherFlavour.LESTA,
+}
