@@ -51,18 +51,11 @@ class LauncherManager:
             launcher = Launcher(metadata, real_path)
             self.__launchers.append(launcher)
 
-    def get_launcher(self, flavour) -> Launcher | LauncherStandalone:
+    def get_launcher(self, flavour=None, realm=None) -> Launcher | LauncherStandalone:
         if not self.__inititalized:
             return None
-        for launcher in self.__launchers:
-            if launcher.flavour == flavour:
-                return launcher
-        return None
-
-    def get_launcher_by_realm(self, realm) -> Launcher:
-        if not self.__inititalized:
-            return None
-        flavour = CLIENT_REALM_TO_LAUNCHER_FLAVOUR.get(realm, LauncherFlavour.UNKNOWN)
+        if flavour is None:
+            flavour = CLIENT_REALM_TO_LAUNCHER_FLAVOUR.get(realm, LauncherFlavour.UNKNOWN)
         for launcher in self.__launchers:
             if launcher.flavour == flavour:
                 return launcher
