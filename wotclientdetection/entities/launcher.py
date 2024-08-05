@@ -95,7 +95,7 @@ class Launcher(LauncherBase):
         if not os.path.isfile(executable_path):
             return
         try:
-            subprocess.Popen(executable_path, shell=True)
+            subprocess.run(executable_path, shell=True)
             return True
         except:
             pass

@@ -41,12 +41,15 @@ class Client:
                 return True
         return False
 
-    def run(self):
+    def run(self, replay_path=None):
         executable_path = os.path.normpath(os.path.join(self.path, EXECUTABLE_NAME))
         if not os.path.isfile(executable_path):
             return
+        launch_args = [executable_path]
+        if replay_path is not None:
+            launch_args.append(replay_path)
         try:
-            subprocess.Popen(executable_path, shell=True)
+            subprocess.run(executable_path, shell=True)
             return True
         except:
             pass
