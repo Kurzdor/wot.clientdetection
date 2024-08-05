@@ -1,5 +1,5 @@
 __title__ = 'wotclientdetection'
-__version__ = '2024.8.5'
+__version__ = '2024.8.5.1'
 
 from wotclientdetection.manager import LauncherManager
 from wotclientdetection.constants import LauncherFlavour, ClientBranch, ClientRealm
