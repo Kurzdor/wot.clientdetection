@@ -1,7 +1,5 @@
 import collections
 
-EXECUTABLE_NAME = 'WorldOfTanks.exe'
-
 class LauncherFlavour:
     UNKNOWN = 0
     WG = 1
@@ -27,6 +25,11 @@ class ClientBranch:
     COMMON_TEST = 2
     SUPERTEST = 3
     SANDBOX = 4
+
+
+class ClientExecutableName:
+    DEFAULT = 'WorldOfTanks.exe'
+    LESTA = 'Tanki.exe'
 
 
 class ClientType:
