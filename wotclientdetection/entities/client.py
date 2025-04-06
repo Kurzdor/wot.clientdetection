@@ -61,7 +61,7 @@ class Client:
         if replay_path is not None:
             launch_args.append(replay_path)
         try:
-            subprocess.run(executable_path, shell=True)
+            subprocess.run(launch_args, shell=True)
             return True
         except:
             pass
