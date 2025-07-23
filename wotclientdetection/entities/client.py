@@ -17,6 +17,8 @@ class Client:
         self.path_resmods = None
         self.mod_extension = None
         self.mod_extension_mask = None
+        self.replay_extension = None
+        self.replay_extension_mask = None
         self.realm = None
         self.type = ClientType.UNKNOWN
         self.client_version = None
@@ -190,10 +192,17 @@ class Client:
                     mod_extension_mask = mod_extension_mask.strip()
                     self.mod_extension = mod_extension_mask[2:]
                     self.mod_extension_mask = mod_extension_mask
+        self.replay_extension = ClientReplayName.DEFAULT
+        # it can be stanalone client so we use check by realm
+        is_lesta_client = self.realm in (ClientRealm.RU, ClientRealm.RPT)
+        is_replay_ext_renamed = Version(self.client_version) >= Version('1.35.0.0')
+        if is_lesta_client and is_replay_ext_renamed:
+            self.replay_extension = ClientReplayName.LESTA
+        self.replay_extension_mask = f'*.{self.replay_extension}'
 
     def __read_exe_filename(self):
         exe_filename = ClientExecutableName.DEFAULT
-        is_lesta_client = self.launcher_flavour == LauncherFlavour.LESTA
+        is_lesta_client = self.realm in (ClientRealm.RU, ClientRealm.RPT)
         is_lesta_alpha = Version(self.client_version) >= Version('1.32.0.0')
         if is_lesta_client and is_lesta_alpha:
             exe_filename = ClientExecutableName.LESTA
@@ -213,6 +222,8 @@ class Client:
         self.path_resmods = None
         self.mod_extension = None
         self.mod_extension_mask = None
+        self.replay_extension = None
+        self.replay_extension_mask = None
         self.realm = None
         self.type = ClientType.UNKNOWN
         self.client_version = None

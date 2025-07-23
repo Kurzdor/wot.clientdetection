@@ -28,8 +28,15 @@ class ClientBranch:
 
 
 class ClientExecutableName:
-    DEFAULT = 'WorldOfTanks.exe'
+    WG = 'WorldOfTanks.exe'
     LESTA = 'Tanki.exe'
+    DEFAULT = WG
+
+
+class ClientReplayName:
+    WG = 'wotreplay'
+    LESTA = 'mtreplay'
+    DEFAULT = WG
 
 
 class ClientType:
