@@ -15,6 +15,8 @@ class Client:
         self.path = path
         self.path_mods = None
         self.path_resmods = None
+        self.mod_extension = None
+        self.mod_extension_mask = None
         self.realm = None
         self.type = ClientType.UNKNOWN
         self.client_version = None
@@ -183,6 +185,11 @@ class Client:
                 self.path_resmods = path
             elif path.startswith('mods'):
                 self.path_mods = path
+                mod_extension_mask = element.attrib.get('mask', None)
+                if mod_extension_mask is not None:
+                    mod_extension_mask = mod_extension_mask.strip()
+                    self.mod_extension = mod_extension_mask[2:]
+                    self.mod_extension_mask = mod_extension_mask
 
     def __read_exe_filename(self):
         exe_filename = ClientExecutableName.DEFAULT
@@ -204,6 +211,8 @@ class Client:
         self.l10n = None
         self.path_mods = None
         self.path_resmods = None
+        self.mod_extension = None
+        self.mod_extension_mask = None
         self.realm = None
         self.type = ClientType.UNKNOWN
         self.client_version = None
