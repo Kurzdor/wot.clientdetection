@@ -1,5 +1,9 @@
 # Changelog
 
+### 2025.7.23.1
+
+- Added replay extension resolving from the client
+
 ### 2025.7.23
 
 - Added mod extension resolving from the client
