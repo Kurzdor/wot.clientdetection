@@ -1,5 +1,9 @@
 # Changelog
 
+### 2025.7.23.2
+
+- Added full client version with revision
+
 ### 2025.7.23.1
 
 - Added replay extension resolving from the client
