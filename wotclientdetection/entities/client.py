@@ -22,6 +22,7 @@ class Client:
         self.realm = None
         self.type = ClientType.UNKNOWN
         self.client_version = None
+        self.full_client_version = None
         self.exe_version = None
         self.exe_filename = None
         self.is_preffered = is_preffered
@@ -138,6 +139,8 @@ class Client:
             return
         version = element.text.strip()
         version = version.replace('v.', '')
+        version = version.strip()
+        self.full_client_version = version
         version = version.split()[:-1]
         version = ' '.join(version)
         version = version.split(None, 1)
@@ -227,6 +230,7 @@ class Client:
         self.realm = None
         self.type = ClientType.UNKNOWN
         self.client_version = None
+        self.full_client_version = None
         self.exe_filename = None
         self.exe_version = None
         self.is_valid = False
