@@ -1,5 +1,18 @@
 # Changelog
 
+### 2025.7.23
+
+- Added mod extension resolving from the client
+
+### 2025.4.7
+
+- Fixed issue when client.run in replay mode wouldn't work
+
+### 2025.1.5
+
+- Added support for clients post Lesta Alpha release (1.32.0.0)
+- Added support for multiclient termination
+
 ### 2024.8.5
 
 - Added ability to programatically run replay with client using passed argument
