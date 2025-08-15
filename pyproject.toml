@@ -11,10 +11,10 @@ license = {file = "LICENSE.md"}
 keywords = ["wot", "mt", "launcher", "client", "detection"]
 authors = [
   {name = "OpenWG.Utils Contributors" },
-  {name = "Paul Ekshmidt", email = "hello@kurzdor.me" }
+  {name = "Paul Ekshmidt", email = "contact@kurzdor.me" }
 ]
 maintainers = [
-  {name = "Paul Ekshmidt", email = "hello@kurzdor.me" }
+  {name = "Paul Ekshmidt", email = "contact@kurzdor.me" }
 ]
 dynamic = ["version"]
 dependencies = [
