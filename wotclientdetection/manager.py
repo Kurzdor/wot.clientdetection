@@ -55,7 +55,7 @@ class LauncherManager:
         if not self.__inititalized:
             return None
         if flavour is None:
-            flavour = CLIENT_REALM_TO_LAUNCHER_FLAVOUR.get(realm, LauncherFlavour.UNKNOWN)
+            flavour = CLIENT_REALM_TO_LAUNCHER_FLAVOUR_MAP.get(realm, LauncherFlavour.UNKNOWN)
         for launcher in self.__launchers:
             if launcher.flavour == flavour:
                 return launcher

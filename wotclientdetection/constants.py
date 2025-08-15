@@ -1,12 +1,8 @@
 import collections
+from enum import Enum
 
 class LauncherFlavour:
-    UNKNOWN = 0
-    WG = 1
-    CHINA_360 = 2
-    STEAM = 3
-    LESTA = 4
-    STANDALONE = 5
+    UNKNOWN, WG, CHINA_360, STEAM, LESTA, STANDALONE = range(6)
     DEFAULT = WG
 
 _LauncherMetadata = collections.namedtuple('LauncherMetadata', ('flavour', 'path', 'pointer', 'executable'))
@@ -19,12 +15,8 @@ LAUNCHERS_METADATA = (
     _LauncherMetadata(LauncherFlavour.STANDALONE, '', '', '')
 )
 
-class ClientBranch:
-    UNKNOWN = 0
-    RELEASE = 1
-    COMMON_TEST = 2
-    SUPERTEST = 3
-    SANDBOX = 4
+class ClientBranch(Enum):
+    UNKNOWN, RELEASE, COMMON_TEST, SUPERTEST, SANDBOX, CLOSED_TEST = range(6)
 
 
 class ClientExecutableName:
@@ -39,10 +31,8 @@ class ClientReplayName:
     DEFAULT = WG
 
 
-class ClientType:
-    UNKNOWN = 0
-    SD = 1
-    HD = 2
+class ClientType(Enum):
+    UNKNOWN, SD, HD = range(3)
 
 
 class ClientRealm:
@@ -53,8 +43,10 @@ class ClientRealm:
     CN = 'CN'
     RU = 'RU'
     RPT = 'RPT'
+    WG_REALMS = (EU, NA, ASIA, CT, CN)
+    LESTA_REALMS = (RU, RPT)
 
-CLIENT_REALM_TO_LAUNCHER_FLAVOUR = {
+CLIENT_REALM_TO_LAUNCHER_FLAVOUR_MAP = {
     ClientRealm.EU: LauncherFlavour.WG,
     ClientRealm.NA: LauncherFlavour.WG,
     ClientRealm.ASIA: LauncherFlavour.WG,

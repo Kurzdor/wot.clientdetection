@@ -5,6 +5,7 @@ import xml.etree.ElementTree as ET
 import psutil
 from packaging.version import Version
 from wotclientdetection.constants import *
+from wotclientdetection.shared import is_semver_version
 
 class Client:
 
@@ -23,8 +24,11 @@ class Client:
         self.type = ClientType.UNKNOWN
         self.client_version = None
         self.full_client_version = None
-        self.exe_version = None
         self.exe_filename = None
+        self.exe_version = None
+        self.is_pdc_supported = False
+        self.is_pdc_exists = False
+        self.pdc_path = None
         self.is_preffered = is_preffered
         self.is_valid = False
         self.__read_client_data()
@@ -109,6 +113,7 @@ class Client:
             self.__invalidate()
             return
         self.__read_exe_version()
+        self.__read_pdc_state()
 
     def __read_app_type(self):
         app_type_path = os.path.normpath(os.path.join(self.path, 'app_type.xml'))
@@ -141,21 +146,25 @@ class Client:
         version = version.replace('v.', '')
         version = version.strip()
         self.full_client_version = version
+        # remove #build_number suffix
         version = version.split()[:-1]
         version = ' '.join(version)
+        # get only semver version
         version = version.split(None, 1)
-        self.client_version = version[0]
-        if len(version) == 2:
-            branch = version[1]
-            if branch == 'Common Test':
-                self.branch = ClientBranch.COMMON_TEST
-            elif branch == 'ST':
-                self.branch = ClientBranch.SUPERTEST
-            elif branch == 'SB':
-                self.branch = ClientBranch.SANDBOX
-            return
-        if self.branch == ClientBranch.UNKNOWN:
-            self.branch = ClientBranch.RELEASE
+        if is_semver_version(version[0]):
+            self.client_version = version[0]
+        version = ' '.join(version)
+        if self.client_version is None:
+            self.client_version = version
+        self.branch = ClientBranch.RELEASE
+        if 'Common Test' in version:
+            self.branch = ClientBranch.COMMON_TEST
+        elif 'ST' in version:
+            self.branch = ClientBranch.SUPERTEST
+        elif 'SB' in version:
+            self.branch = ClientBranch.SANDBOX
+        elif 'Closed Test' in version:
+            self.branch = ClientBranch.CLOSED_TEST
 
     def __read_game_info(self):
         game_info_path = os.path.normpath(os.path.join(self.path, 'game_info.xml'))
@@ -197,18 +206,20 @@ class Client:
                     self.mod_extension_mask = mod_extension_mask
         self.replay_extension = ClientReplayName.DEFAULT
         # it can be stanalone client so we use check by realm
-        is_lesta_client = self.realm in (ClientRealm.RU, ClientRealm.RPT)
-        is_replay_ext_renamed = Version(self.client_version) >= Version('1.35.0.0')
-        if is_lesta_client and is_replay_ext_renamed:
-            self.replay_extension = ClientReplayName.LESTA
+        is_lesta_client = self.realm in ClientRealm.LESTA_REALMS
+        if is_lesta_client and is_semver_version(self.client_version):
+            is_replay_ext_renamed = Version(self.client_version) >= Version('1.35.0.0')
+            if is_replay_ext_renamed:
+                self.replay_extension = ClientReplayName.LESTA
         self.replay_extension_mask = f'*.{self.replay_extension}'
 
     def __read_exe_filename(self):
         exe_filename = ClientExecutableName.DEFAULT
-        is_lesta_client = self.realm in (ClientRealm.RU, ClientRealm.RPT)
-        is_lesta_alpha = Version(self.client_version) >= Version('1.32.0.0')
-        if is_lesta_client and is_lesta_alpha:
-            exe_filename = ClientExecutableName.LESTA
+        is_lesta_client = self.realm in ClientRealm.LESTA_REALMS
+        if is_lesta_client and is_semver_version(self.client_version):
+            is_lesta_alpha = Version(self.client_version) >= Version('1.32.0.0')
+            if is_lesta_alpha:
+                exe_filename = ClientExecutableName.LESTA
         exe_filepath = os.path.normpath(os.path.join(self.path, exe_filename))
         self.is_valid &= os.path.isfile(exe_filepath)
         if self.is_valid:
@@ -217,6 +228,17 @@ class Client:
     def __read_exe_version(self):
         # NotImplemented
         pass
+
+    def __read_pdc_state(self):
+        if self.realm in ClientRealm.LESTA_REALMS:
+            return
+        self.is_pdc_supported = True
+        if is_semver_version(self.client_version):
+            self.is_pdc_supported = Version(self.client_version) >= Version('1.27.1.0')
+        if not self.is_pdc_supported:
+            return
+        self.pdc_path = os.path.normpath(os.path.join(self.path, 'data.wgpdc'))
+        self.is_pdc_exists = os.path.isfile(self.pdc_path)
 
     def __invalidate(self):
         self.branch = ClientBranch.UNKNOWN
@@ -233,6 +255,9 @@ class Client:
         self.full_client_version = None
         self.exe_filename = None
         self.exe_version = None
+        self.is_pdc_supported = False
+        self.is_pdc_exists = False
+        self.pdc_path = None
         self.is_valid = False
 
     def __repr__(self):
