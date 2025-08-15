@@ -1,5 +1,10 @@
 # Changelog
 
+### 2025.8.16
+
+- Added support for PDC state for WG clients
+- Enhanced non-semver version string handling
+
 ### 2025.7.23.2
 
 - Added full client version with revision
